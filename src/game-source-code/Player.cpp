@@ -17,13 +17,14 @@ void Player::initSprite()
     this->sprite.scale(0.2f,0.2f);
     this->sprite.setPosition(this->xdir, this->ydir);
 }
-
+/*
 bool Player::move_player(float delX, float delY)
 {
     sf::FloatRect player_bounds = this->sprite.getGlobalBounds();
     this->sprite.setPosition(player_bounds.left + player_bounds.width + delX,player_bounds.top + dirY)
 
 }
+*/
 
 Player::Player()
 {

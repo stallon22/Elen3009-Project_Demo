@@ -8,11 +8,14 @@
 #include <iostream>
 #include "Player.h"
 #include "splashScreen.h"
+#include "mushroom.h"
+#include "Centipede.h"
 
 class game
 {
 public:
     game();
+    game(float dt);
     ~game();
 
 
@@ -26,17 +29,23 @@ public:
 private:
     sf::VideoMode videoMode;
     sf::RenderWindow* window;
+    sf::Clock clock;
     Player* player;
+    mushroom* mushroom_;
+    Centipede* centipede;
     splashScreen* splash_;
 
     bool endGame;
     sf::Event event;
     float width;
     float height;
+    float dt_;
 
     void initialize_Variables();
     void initialize_Window();
     void initPlayer();
+    void initMushroom();
+    void initCentipede();
 
 };
 

@@ -1,4 +1,8 @@
 #include "game.h"
+#include "mushroom.h"
+
+
+
 
 game::game()
 {
@@ -6,15 +10,23 @@ game::game()
     this->initialize_Variables();
     this->initialize_Window();
     this->initPlayer();
-
+    this->initMushroom();
+    this->initCentipede();
 
 }
 
+game::game(float dt)
+{
+    this->dt_ =  dt;
+
+}
 game::~game()
 {
     //dtor
     delete this->window;
     delete this->player;
+    delete this->mushroom_;
+    delete this->centipede;
 }
 
 void game::initPlayer()
@@ -22,6 +34,17 @@ void game::initPlayer()
 
     this->player = new Player();
 }
+
+void game::initMushroom()
+{
+  this->mushroom_ = new mushroom();
+}
+
+void game::initCentipede()
+{
+    this->centipede = new Centipede();
+}
+
 void game::initialize_Variables()
 {
     this->endGame = false; //while the game is still running
@@ -47,6 +70,7 @@ const bool game::running() const
 //The events passed by a user(when pressing a certain button, take action
 void game::poll_Events()
 {
+    dt_ = clock.restart().asSeconds();
     while(this->window->pollEvent(this->event))
     {
         switch(this->event.type)
@@ -55,27 +79,29 @@ void game::poll_Events()
             this->window->close();
             break;
         case sf::Event::KeyPressed:
-            if(this->event.key.code == sf::Keyboard::Escape)
+            if(this->event.key.code == sf::Keyboard::X)
                 this->window->close();
             break;
         }
     }
+    centipede->update(dt_);
 }
 //update the window after an event
 void game::update()
 {
     this->poll_Events();
-
     player->update(this->window);
 }
 
-//void game::uoda
 
 void game::render()
 {
     this->window->clear();
     //rendering
     //this->splash_->show(this->window);
-    this->player->render(this->window);
+  //this->mushroom_->render(this->window);
+  this->centipede->render(this->window);
+  this->player->render(this->window);
+    //this->mushroom_->render(this->window);
     this->window->display();
 }
